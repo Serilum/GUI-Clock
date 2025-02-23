@@ -2,6 +2,7 @@ package com.natamus.guiclock.events;
 
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.natamus.collective.functions.GUIFunctions;
 import com.natamus.collective.functions.StringFunctions;
 import com.natamus.guiclock.config.ConfigHandler;
 import net.minecraft.client.Minecraft;
@@ -22,7 +23,7 @@ public class GUIEvent {
 	private static String daystring = "";
 	
 	public static void renderOverlay(GuiGraphics guiGraphics, float tickDelta) {
-		if (mc.options.renderDebug) {
+		if (GUIFunctions.shouldHideGUI()) {
 			return;
 		}
 
