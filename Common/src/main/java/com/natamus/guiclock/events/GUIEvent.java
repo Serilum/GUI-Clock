@@ -186,9 +186,9 @@ public class GUIEvent {
 	}
 	
 	private static String getGameTime() {
-		int time;
-		int gametime = (int)mc.level.getDayTime();
-		int daysplayed = 0;
+		long time;
+		long gametime = mc.level.getDayTime();
+		long daysplayed = 0;
 		
 		while (gametime >= 24000) {
 			gametime-=24000;
