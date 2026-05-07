@@ -197,6 +197,8 @@ public class GUIEvent {
 		
 		if (ConfigHandler.showDaysPlayedWorld) {
 			daystring = "Day " + daysPlayed;
+		} else {
+			daystring = "";
 		}
 
 		if (gameTime >= 18000) {
