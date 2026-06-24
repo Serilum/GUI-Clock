@@ -46,138 +46,141 @@ public class GUIEvent {
 
 		PoseStack poseStack = guiGraphics.pose();
 		poseStack.pushPose();
-		
-		Font fontRenderer = mc.font;
-		Window scaled = mc.getWindow();
-		int width = scaled.getGuiScaledWidth();
-		
-		int heightoffset = ConfigHandler.clockHeightOffset;
-		if (heightoffset < 5) {
-			heightoffset = 5;
-		}
-		
-		if (ConfigHandler.lowerClockWhenPlayerHasEffects) {
-			Collection<MobEffectInstance> activeeffects = mc.player.getActiveEffects();
-			if (activeeffects.size() > 0) {
-				boolean haspositive = false;
-				boolean hasnegative = false;
-				for (MobEffectInstance effect : activeeffects) {
-					if (effect.isVisible()) {
-						if (effect.getEffect().getCategory().equals(MobEffectCategory.BENEFICIAL)) {
-							haspositive = true;
-						}
-						else {
-							hasnegative = true;
-						}
 
-						if (haspositive && hasnegative) {
-							break;
+		try {
+			Font fontRenderer = mc.font;
+			Window scaled = mc.getWindow();
+			int width = scaled.getGuiScaledWidth();
+
+			int heightoffset = ConfigHandler.clockHeightOffset;
+			if (heightoffset < 5) {
+				heightoffset = 5;
+			}
+
+			if (ConfigHandler.lowerClockWhenPlayerHasEffects) {
+				Collection<MobEffectInstance> activeeffects = mc.player.getActiveEffects();
+				if (activeeffects.size() > 0) {
+					boolean haspositive = false;
+					boolean hasnegative = false;
+					for (MobEffectInstance effect : activeeffects) {
+						if (effect.isVisible()) {
+							if (effect.getEffect().getCategory().equals(MobEffectCategory.BENEFICIAL)) {
+								haspositive = true;
+							}
+							else {
+								hasnegative = true;
+							}
+
+							if (haspositive && hasnegative) {
+								break;
+							}
 						}
 					}
-				}
 
-				if (hasnegative && haspositive) {
-					heightoffset += 50;
-				}
-				else if (haspositive && !hasnegative) {
-					heightoffset += 25;
-				}
-			}
-		}
-		
-		int xcoord;
-		int daycoord;
-		if (ConfigHandler.showOnlyMinecraftClockIcon) {
-			if (gametimeb) {
-				if (!found) {
-					return;
-				}
-			}
-			
-			if (ConfigHandler.clockPositionIsLeft) {
-				xcoord = 20;
-			}
-			else if (ConfigHandler.clockPositionIsCenter) {
-				xcoord = (width/2) - 8;
-			}
-			else {
-				xcoord = width - 20;
-			}
-			
-			xcoord += ConfigHandler.clockWidthOffset;
-
-			guiGraphics.renderItem(new ItemStack(Items.CLOCK), xcoord, heightoffset);
-		}
-		else {
-			String time;
-			String realtime = StringFunctions.getPCLocalTime(ConfigHandler._24hourformat, ConfigHandler.showRealTimeSeconds);
-			if (ConfigHandler.showBothTimes) {
-				if (gametimeb && realtimeb) {
-					if (!found) {
-						return;
+					if (hasnegative && haspositive) {
+						heightoffset += 50;
 					}
-					time = getGameTime() + " | " + realtime;
-				}
-				else if (!found && gametimeb) {
-					time = realtime;
-				}
-				else if (!found && realtimeb) {
-					time = getGameTime();
-				}
-				else {
-					time = getGameTime() + " | " + realtime;
-				}
-			}
-			else if (ConfigHandler.showRealTime) {
-				if (realtimeb) {
-					if (!found) {
-						return;
+					else if (haspositive && !hasnegative) {
+						heightoffset += 25;
 					}
 				}
-				time = realtime;
 			}
-			else {
+
+			int xcoord;
+			int daycoord;
+			if (ConfigHandler.showOnlyMinecraftClockIcon) {
 				if (gametimeb) {
 					if (!found) {
 						return;
 					}
 				}
-				time = getGameTime();
-			}
-			
-			if (time.equals("")) {
-				return;
-			}
-			
-			int stringWidth = fontRenderer.width(time);
-			int daystringWidth = fontRenderer.width(daystring);
-			
-			Color colour = new Color(ConfigHandler.RGB_R, ConfigHandler.RGB_G, ConfigHandler.RGB_B, 255);
-			
-			if (ConfigHandler.clockPositionIsLeft) {
-				xcoord = 5;
-				daycoord = 5;
-			}
-			else if (ConfigHandler.clockPositionIsCenter) {
-				xcoord = (width/2) - (stringWidth/2);
-				daycoord = (width/2) - (daystringWidth/2);
+
+				if (ConfigHandler.clockPositionIsLeft) {
+					xcoord = 20;
+				}
+				else if (ConfigHandler.clockPositionIsCenter) {
+					xcoord = (width/2) - 8;
+				}
+				else {
+					xcoord = width - 20;
+				}
+
+				xcoord += ConfigHandler.clockWidthOffset;
+
+				guiGraphics.renderItem(new ItemStack(Items.CLOCK), xcoord, heightoffset);
 			}
 			else {
-				xcoord = width - stringWidth - 5;
-				daycoord = width - daystringWidth - 5;
-			}
-			
-			xcoord += ConfigHandler.clockWidthOffset;
-			daycoord += ConfigHandler.clockWidthOffset;
+				String time;
+				String realtime = StringFunctions.getPCLocalTime(ConfigHandler._24hourformat, ConfigHandler.showRealTimeSeconds);
+				if (ConfigHandler.showBothTimes) {
+					if (gametimeb && realtimeb) {
+						if (!found) {
+							return;
+						}
+						time = getGameTime() + " | " + realtime;
+					}
+					else if (!found && gametimeb) {
+						time = realtime;
+					}
+					else if (!found && realtimeb) {
+						time = getGameTime();
+					}
+					else {
+						time = getGameTime() + " | " + realtime;
+					}
+				}
+				else if (ConfigHandler.showRealTime) {
+					if (realtimeb) {
+						if (!found) {
+							return;
+						}
+					}
+					time = realtime;
+				}
+				else {
+					if (gametimeb) {
+						if (!found) {
+							return;
+						}
+					}
+					time = getGameTime();
+				}
 
-			int rgb = colour.getRGB();
-			drawText(fontRenderer, guiGraphics, time, xcoord, heightoffset, rgb, ConfigHandler.drawTextShadow);
-			if (!daystring.equals("")) {
-				drawText(fontRenderer, guiGraphics, daystring, daycoord, heightoffset+10, rgb, ConfigHandler.drawTextShadow);
+				if (time.equals("")) {
+					return;
+				}
+
+				int stringWidth = fontRenderer.width(time);
+				int daystringWidth = fontRenderer.width(daystring);
+
+				Color colour = new Color(ConfigHandler.RGB_R, ConfigHandler.RGB_G, ConfigHandler.RGB_B, 255);
+
+				if (ConfigHandler.clockPositionIsLeft) {
+					xcoord = 5;
+					daycoord = 5;
+				}
+				else if (ConfigHandler.clockPositionIsCenter) {
+					xcoord = (width/2) - (stringWidth/2);
+					daycoord = (width/2) - (daystringWidth/2);
+				}
+				else {
+					xcoord = width - stringWidth - 5;
+					daycoord = width - daystringWidth - 5;
+				}
+
+				xcoord += ConfigHandler.clockWidthOffset;
+				daycoord += ConfigHandler.clockWidthOffset;
+
+				int rgb = colour.getRGB();
+				drawText(fontRenderer, guiGraphics, time, xcoord, heightoffset, rgb, ConfigHandler.drawTextShadow);
+				if (!daystring.equals("")) {
+					drawText(fontRenderer, guiGraphics, daystring, daycoord, heightoffset+10, rgb, ConfigHandler.drawTextShadow);
+				}
 			}
 		}
-		
-		poseStack.popPose();
+		finally {
+			poseStack.popPose();
+		}
 	}
 
 	private static void drawText(Font font, GuiGraphics guiGraphics, String content, int x, int y, int rgb, boolean drawShadow) {
