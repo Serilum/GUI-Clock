@@ -232,8 +232,14 @@ public class GUIEvent {
 		String[] strsplit = stringtime.toString().split("");
 		
 		int minutes = (int)Math.floor(Double.parseDouble(strsplit[2] + strsplit[3])/100*60);
-		String sm = minutes + "";
-		if (minutes < 10) {
+        
+        float interval = ConfigHandler.updateInterval;
+        if (interval != 1) {
+            minutes = (int) (((int)(minutes * (1 / interval))) * interval);
+        }
+
+        String sm = minutes + "";
+        if (minutes < 10) {
 			sm = "0" + minutes;
 		}
 		

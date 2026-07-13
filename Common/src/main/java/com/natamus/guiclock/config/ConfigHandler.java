@@ -19,7 +19,8 @@ public class ConfigHandler extends DuskConfig {
 	@Entry public static boolean showRealTime = false;
 	@Entry public static boolean showRealTimeSeconds = false;
 	@Entry public static boolean showDaysPlayedWorld = true;
-	@Entry public static boolean clockPositionIsLeft = false;
+    @Entry (min = 1, max = 60) public static int updateInterval  = 1;
+    @Entry public static boolean clockPositionIsLeft = false;
 	@Entry public static boolean clockPositionIsCenter = false;
 	@Entry public static boolean clockPositionIsRight = true;
 	@Entry(min = 0, max = 3000) public static int clockHeightOffset = 5;
@@ -57,6 +58,9 @@ public class ConfigHandler extends DuskConfig {
 		configMetaData.put("showDaysPlayedWorld", Arrays.asList(
 			"Show the days played in the world."
 		));
+        configMetaData.put("updateInterval", Arrays.asList(
+           "Sets the base step at which clock updates"
+        ));
 		configMetaData.put("clockPositionIsLeft", Arrays.asList(
 			"Places the GUI clock on the left."
 		));
