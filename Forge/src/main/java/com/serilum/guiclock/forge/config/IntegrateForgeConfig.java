@@ -1,7 +1,7 @@
-package com.natamus.guiclock.forge.config;
+package com.serilum.guiclock.forge.config;
 
 import com.natamus.collective.config.DuskConfig;
-import com.natamus.guiclock.util.Reference;
+import com.serilum.guiclock.util.Reference;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.fml.ModLoadingContext;
 

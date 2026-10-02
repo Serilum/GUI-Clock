@@ -1,7 +1,7 @@
-package com.natamus.guiclock;
+package com.serilum.guiclock;
 
 import net.fabricmc.api.ClientModInitializer;
-import com.natamus.guiclock.util.Reference;
+import com.serilum.guiclock.util.Reference;
 import com.natamus.collective.check.ShouldLoadCheck;
 
 public class ModFabricClient implements ClientModInitializer {

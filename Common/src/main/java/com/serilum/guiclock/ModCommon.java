@@ -1,9 +1,9 @@
-package com.natamus.guiclock;
+package com.serilum.guiclock;
 
 import com.natamus.collective.globalcallbacks.CollectiveGuiCallback;
 import com.natamus.collective.services.Services;
-import com.natamus.guiclock.config.ConfigHandler;
-import com.natamus.guiclock.events.GUIEvent;
+import com.serilum.guiclock.config.ConfigHandler;
+import com.serilum.guiclock.events.GUIEvent;
 
 public class ModCommon {
 

@@ -1,7 +1,7 @@
-package com.natamus.guiclock.config;
+package com.serilum.guiclock.config;
 
 import com.natamus.collective.config.DuskConfig;
-import com.natamus.guiclock.util.Reference;
+import com.serilum.guiclock.util.Reference;
 
 import java.util.Arrays;
 import java.util.HashMap;
