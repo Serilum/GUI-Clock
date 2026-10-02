@@ -1,10 +1,10 @@
-package com.natamus.guiclock.events;
+package com.serilum.guiclock.events;
 
 import com.mojang.blaze3d.platform.Window;
 import org.joml.Matrix3x2fStack;
 import com.natamus.collective.functions.GUIFunctions;
 import com.natamus.collective.functions.StringFunctions;
-import com.natamus.guiclock.config.ConfigHandler;
+import com.serilum.guiclock.config.ConfigHandler;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
