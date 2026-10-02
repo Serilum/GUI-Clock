@@ -1,6 +1,6 @@
-package com.natamus.guiclock.forge.events;
+package com.serilum.guiclock.forge.events;
 
-import com.natamus.guiclock.events.GUIEvent;
+import com.serilum.guiclock.events.GUIEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.entity.ItemRenderer;

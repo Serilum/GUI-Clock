@@ -1,35 +1,35 @@
 {
   "schemaVersion": 1,
   "id": "guiclock",
-  "version": "4.7",
+  "version": "4.8",
 
   "name": "GUI Clock",
   "description": "Shows the time and days played in the GUI on the screen with a clock in the inventory.",
-  "authors": [ "Rick South" ],
+  "authors": [ "Serilum" ],
   "contact": {
     "homepage": "https://serilum.com/mod/gui-clock",
     "sources": "https://github.com/Serilum/GUI-Clock",
     "issues": "https://github.com/Serilum/.issue-tracker/labels/Mod:%20GUI%20Clock"
   },
 
-  "license": "All Right Reserved",
+  "license": "All Rights Reserved",
   "icon": "icon.png",
 
   "environment": "*",
-  "entrypoints": { "main": [ "com.natamus.guiclock.ModFabric" ], "client": [ "com.natamus.guiclock.ModFabricClient" ], "modmenu": [ "com.natamus.guiclock.fabric.config.IntegrateModMenu" ] },
+  "entrypoints": { "main": [ "com.serilum.guiclock.ModFabric" ], "client": [ "com.serilum.guiclock.ModFabricClient" ], "modmenu": [ "com.serilum.guiclock.fabric.config.IntegrateModMenu" ] },
 
   "depends": {
     "fabricloader": ">=0.12.5",
     "fabric": "*",
     "minecraft": ">=1.20",
     "java": ">=17",
-    "collective": ">=7.93"
+    "collective": ">=8.40"
   },
 
   "custom": {
     "modmenu": {
       "links": {
-        "Donate <3" : "https://ricksouth.com/donate"
+        "Donate <3" : "https://serilum.com/donate"
       }
     }
   },
@@ -38,18 +38,15 @@
 	  " ",
 	  "Thank you very much to my Membership sponsors for supporting the development of this mod!",
 	  " ",
-	  "If you would like to contribute too, check out https://serilum.com/donate.",
+	  "If you would like to contribute too, check out https://serilum.com/donate",
 	  " ",
 	  "Membership sponsors:",
-	  " Alister",
 	  " Andrean Olgo",
+	  " AnyankaT",
 	  " aternosorg",
 	  " Cherriesaurus",
-	  " David Sanchez",
-	  " drdog111",
-	  " Michael W. S.",
-	  " t128",
-	  " Tyler Behl",
-	  " XAgent"
+	  " Linda Jansen",
+	  " MWS",
+	  " Tyler Behl"
   ]
 }

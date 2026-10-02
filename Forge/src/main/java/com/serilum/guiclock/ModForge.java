@@ -1,10 +1,10 @@
-package com.natamus.guiclock;
+package com.serilum.guiclock;
 
 import com.natamus.collective.check.RegisterMod;
 import com.natamus.collective.check.ShouldLoadCheck;
-import com.natamus.guiclock.forge.config.IntegrateForgeConfig;
-import com.natamus.guiclock.forge.events.ForgeGUIEvent;
-import com.natamus.guiclock.util.Reference;
+import com.serilum.guiclock.forge.config.IntegrateForgeConfig;
+import com.serilum.guiclock.forge.events.ForgeGUIEvent;
+import com.serilum.guiclock.util.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;

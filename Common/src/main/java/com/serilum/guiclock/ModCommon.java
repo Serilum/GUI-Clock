@@ -1,6 +1,6 @@
-package com.natamus.guiclock;
+package com.serilum.guiclock;
 
-import com.natamus.guiclock.config.ConfigHandler;
+import com.serilum.guiclock.config.ConfigHandler;
 
 public class ModCommon {
 

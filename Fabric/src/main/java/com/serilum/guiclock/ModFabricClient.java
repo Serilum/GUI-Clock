@@ -1,8 +1,8 @@
-package com.natamus.guiclock;
+package com.serilum.guiclock;
 
-import com.natamus.guiclock.events.GUIEvent;
+import com.serilum.guiclock.events.GUIEvent;
 import net.fabricmc.api.ClientModInitializer;
-import com.natamus.guiclock.util.Reference;
+import com.serilum.guiclock.util.Reference;
 import com.natamus.collective.check.ShouldLoadCheck;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.GuiGraphics;
