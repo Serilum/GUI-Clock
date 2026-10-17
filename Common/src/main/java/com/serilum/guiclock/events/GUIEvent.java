@@ -2,6 +2,7 @@ package com.serilum.guiclock.events;
 
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.natamus.collective.functions.ColourFunctions;
 import com.natamus.collective.functions.GUIFunctions;
 import com.natamus.collective.functions.StringFunctions;
 import com.serilum.guiclock.config.ConfigHandler;
@@ -95,10 +96,10 @@ public class GUIEvent {
 				}
 			}
 			
-			if (ConfigHandler.clockPositionIsLeft) {
+			if (ConfigHandler.clockPosition.equals("Left")) {
 				xcoord = 20;
 			}
-			else if (ConfigHandler.clockPositionIsCenter) {
+			else if (ConfigHandler.clockPosition.equals("Center")) {
 				xcoord = (width/2) - 8;
 			}
 			else {
@@ -153,13 +154,13 @@ public class GUIEvent {
 			int stringWidth = fontRenderer.width(time);
 			int daystringWidth = fontRenderer.width(daystring);
 			
-			Color colour = new Color(ConfigHandler.RGB_R, ConfigHandler.RGB_G, ConfigHandler.RGB_B, 255);
+			Color colour = new Color(ColourFunctions.getRgbColour(ConfigHandler.RGB));
 			
-			if (ConfigHandler.clockPositionIsLeft) {
+			if (ConfigHandler.clockPosition.equals("Left")) {
 				xcoord = 5;
 				daycoord = 5;
 			}
-			else if (ConfigHandler.clockPositionIsCenter) {
+			else if (ConfigHandler.clockPosition.equals("Center")) {
 				xcoord = (width/2) - (stringWidth/2);
 				daycoord = (width/2) - (daystringWidth/2);
 			}
