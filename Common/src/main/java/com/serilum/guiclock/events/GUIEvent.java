@@ -1,7 +1,6 @@
 package com.serilum.guiclock.events;
 
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.natamus.collective.functions.ColourFunctions;
 import com.natamus.collective.functions.GUIFunctions;
 import com.natamus.collective.functions.StringFunctions;
@@ -46,9 +45,6 @@ public class GUIEvent {
 			}
 		}
 
-		PoseStack poseStack = guiGraphics.pose();
-		poseStack.pushPose();
-		
 		Font fontRenderer = mc.font;
 		Window scaled = mc.getWindow();
 		int width = scaled.getGuiScaledWidth();
@@ -111,6 +107,8 @@ public class GUIEvent {
 			guiGraphics.renderItem(new ItemStack(Items.CLOCK), xcoord, heightoffset);
 		}
 		else {
+			daystring = "";
+
 			String time;
 			String realtime = StringFunctions.getPCLocalTime(ConfigHandler._24hourformat, ConfigHandler.showRealTimeSeconds);
 			if (ConfigHandler.showBothTimes) {
@@ -178,8 +176,6 @@ public class GUIEvent {
 				drawText(fontRenderer, guiGraphics, daystring, daycoord, heightoffset+10, rgb, ConfigHandler.drawTextShadow);
 			}
 		}
-		
-		poseStack.popPose();
 	}
 
 	private static void drawText(Font font, GuiGraphics guiGraphics, String content, int x, int y, int rgb, boolean drawShadow) {
@@ -187,15 +183,11 @@ public class GUIEvent {
 	}
 	
 	private static String getGameTime() {
-		int time;
-		int gametime = (int)mc.level.getDayTime();
-		int daysplayed = 0;
-		
-		while (gametime >= 24000) {
-			gametime-=24000;
-			daysplayed += 1;
-		}
-		
+		long time;
+		long totaltime = mc.level.getDayTime();
+		long gametime = totaltime % 24000;
+		long daysplayed = totaltime / 24000;
+
 		if (ConfigHandler.showDaysPlayedWorld) {
 			daystring = "Day " + daysplayed;
 		}
@@ -234,6 +226,8 @@ public class GUIEvent {
 		String[] strsplit = stringtime.toString().split("");
 		
 		int minutes = (int)Math.floor(Double.parseDouble(strsplit[2] + strsplit[3])/100*60);
+		minutes -= minutes % ConfigHandler.minuteStep;
+
 		String sm = minutes + "";
 		if (minutes < 10) {
 			sm = "0" + minutes;
