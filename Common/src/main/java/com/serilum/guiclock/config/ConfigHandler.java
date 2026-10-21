@@ -19,6 +19,7 @@ public class ConfigHandler extends DuskConfig {
 	@Entry public static boolean showRealTime = false;
 	@Entry public static boolean showRealTimeSeconds = false;
 	@Entry public static boolean showDaysPlayedWorld = true;
+	@Entry(min = 1, max = 60) public static int minuteStep = 1;
 	@Entry(options = {"Left", "Center", "Right"}) public static String clockPosition = "Right";
 	@Entry(min = 0, max = 3000) public static int clockHeightOffset = 5;
 	@Entry(min = -3000, max = 3000) public static int clockWidthOffset = 0;
@@ -52,6 +53,9 @@ public class ConfigHandler extends DuskConfig {
 		));
 		configMetaData.put("showDaysPlayedWorld", Arrays.asList(
 			"Show the days played in the world."
+		));
+		configMetaData.put("minuteStep", Arrays.asList(
+			"Rounds the in-game minutes down to a multiple of this value. For example, 15 shows 6:00, 6:15, 6:30 and 6:45. 1 shows every minute."
 		));
 		configMetaData.put("clockPosition", Arrays.asList(
 			"Where the clock is shown at the top of the screen."
