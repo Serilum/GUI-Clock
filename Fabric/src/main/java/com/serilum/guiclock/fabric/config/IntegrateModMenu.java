@@ -1,7 +1,7 @@
-package com.natamus.guiclock.fabric.config;
+package com.serilum.guiclock.fabric.config;
 
 import com.natamus.collective.config.DuskConfig;
-import com.natamus.guiclock.util.Reference;
+import com.serilum.guiclock.util.Reference;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 

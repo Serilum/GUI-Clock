@@ -1,7 +1,7 @@
-package com.natamus.guiclock.config;
+package com.serilum.guiclock.config;
 
 import com.natamus.collective.config.DuskConfig;
-import com.natamus.guiclock.util.Reference;
+import com.serilum.guiclock.util.Reference;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -19,15 +19,12 @@ public class ConfigHandler extends DuskConfig {
 	@Entry public static boolean showRealTime = false;
 	@Entry public static boolean showRealTimeSeconds = false;
 	@Entry public static boolean showDaysPlayedWorld = true;
-	@Entry public static boolean clockPositionIsLeft = false;
-	@Entry public static boolean clockPositionIsCenter = false;
-	@Entry public static boolean clockPositionIsRight = true;
+	@Entry(min = 1, max = 60) public static int minuteStep = 1;
+	@Entry(options = {"Left", "Center", "Right"}) public static String clockPosition = "Right";
 	@Entry(min = 0, max = 3000) public static int clockHeightOffset = 5;
 	@Entry(min = -3000, max = 3000) public static int clockWidthOffset = 0;
 	@Entry public static boolean drawTextShadow = true;
-	@Entry(min = 0, max = 255) public static int RGB_R = 255;
-	@Entry(min = 0, max = 255) public static int RGB_G = 255;
-	@Entry(min = 0, max = 255) public static int RGB_B = 255;
+	@Entry(rgb = true) public static String RGB = "255,255,255";
 
 	public static void initConfig() {
 		configMetaData.put("mustHaveClockInInventoryForGameTime", Arrays.asList(
@@ -57,14 +54,11 @@ public class ConfigHandler extends DuskConfig {
 		configMetaData.put("showDaysPlayedWorld", Arrays.asList(
 			"Show the days played in the world."
 		));
-		configMetaData.put("clockPositionIsLeft", Arrays.asList(
-			"Places the GUI clock on the left."
+		configMetaData.put("minuteStep", Arrays.asList(
+			"Rounds the in-game minutes down to a multiple of this value. For example, 15 shows 6:00, 6:15, 6:30 and 6:45. 1 shows every minute."
 		));
-		configMetaData.put("clockPositionIsCenter", Arrays.asList(
-			"Places the GUI clock in the middle."
-		));
-		configMetaData.put("clockPositionIsRight", Arrays.asList(
-			"Places the GUI clock on the right."
+		configMetaData.put("clockPosition", Arrays.asList(
+			"Where the clock is shown at the top of the screen."
 		));
 		configMetaData.put("clockHeightOffset", Arrays.asList(
 			"The vertical offset (y coord) for the Clock. This determines how far down the time should be on the screen. Can be changed to prevent GUIs from overlapping."
@@ -75,14 +69,8 @@ public class ConfigHandler extends DuskConfig {
 		configMetaData.put("drawTextShadow", Arrays.asList(
 			"If the text displayed should have a shadow drawn below it."
 		));
-		configMetaData.put("RGB_R", Arrays.asList(
-			"The red RGB value for the clock text."
-		));
-		configMetaData.put("RGB_G", Arrays.asList(
-			"The green RGB value for the clock text."
-		));
-		configMetaData.put("RGB_B", Arrays.asList(
-			"The blue RGB value for the clock text."
+		configMetaData.put("RGB", Arrays.asList(
+			"The colour of the clock text, as red, green and blue values from 0 to 255."
 		));
 
 		DuskConfig.init(Reference.NAME, Reference.MOD_ID, ConfigHandler.class);

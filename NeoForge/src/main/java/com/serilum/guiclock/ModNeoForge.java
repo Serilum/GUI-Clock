@@ -1,9 +1,9 @@
-package com.natamus.guiclock;
+package com.serilum.guiclock;
 
 import com.natamus.collective.check.RegisterMod;
 import com.natamus.collective.check.ShouldLoadCheck;
-import com.natamus.guiclock.neoforge.config.IntegrateNeoForgeConfig;
-import com.natamus.guiclock.util.Reference;
+import com.serilum.guiclock.neoforge.config.IntegrateNeoForgeConfig;
+import com.serilum.guiclock.util.Reference;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;

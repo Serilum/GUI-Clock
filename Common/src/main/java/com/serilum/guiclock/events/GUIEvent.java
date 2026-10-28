@@ -1,10 +1,10 @@
-package com.natamus.guiclock.events;
+package com.serilum.guiclock.events;
 
 import com.mojang.blaze3d.platform.Window;
-import org.joml.Matrix3x2fStack;
+import com.natamus.collective.functions.ColourFunctions;
 import com.natamus.collective.functions.GUIFunctions;
 import com.natamus.collective.functions.StringFunctions;
-import com.natamus.guiclock.config.ConfigHandler;
+import com.serilum.guiclock.config.ConfigHandler;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -45,9 +45,6 @@ public class GUIEvent {
 			}
 		}
 
-		Matrix3x2fStack matrixStack = guiGraphics.pose();
-		matrixStack.pushMatrix();
-		
 		Font fontRenderer = mc.font;
 		Window scaled = mc.getWindow();
 		int width = scaled.getGuiScaledWidth();
@@ -95,10 +92,10 @@ public class GUIEvent {
 				}
 			}
 			
-			if (ConfigHandler.clockPositionIsLeft) {
+			if (ConfigHandler.clockPosition.equals("Left")) {
 				xcoord = 20;
 			}
-			else if (ConfigHandler.clockPositionIsCenter) {
+			else if (ConfigHandler.clockPosition.equals("Center")) {
 				xcoord = (width/2) - 8;
 			}
 			else {
@@ -110,6 +107,8 @@ public class GUIEvent {
 			guiGraphics.item(new ItemStack(Items.CLOCK), xcoord, heightoffset);
 		}
 		else {
+			daystring = "";
+
 			String time;
 			String realtime = StringFunctions.getPCLocalTime(ConfigHandler._24hourformat, ConfigHandler.showRealTimeSeconds);
 			if (ConfigHandler.showBothTimes) {
@@ -153,13 +152,13 @@ public class GUIEvent {
 			int stringWidth = fontRenderer.width(time);
 			int daystringWidth = fontRenderer.width(daystring);
 			
-			Color colour = new Color(ConfigHandler.RGB_R, ConfigHandler.RGB_G, ConfigHandler.RGB_B, 255);
+			Color colour = new Color(ColourFunctions.getRgbColour(ConfigHandler.RGB));
 			
-			if (ConfigHandler.clockPositionIsLeft) {
+			if (ConfigHandler.clockPosition.equals("Left")) {
 				xcoord = 5;
 				daycoord = 5;
 			}
-			else if (ConfigHandler.clockPositionIsCenter) {
+			else if (ConfigHandler.clockPosition.equals("Center")) {
 				xcoord = (width/2) - (stringWidth/2);
 				daycoord = (width/2) - (daystringWidth/2);
 			}
@@ -177,8 +176,6 @@ public class GUIEvent {
 				drawText(fontRenderer, guiGraphics, daystring, daycoord, heightoffset+10, rgb, ConfigHandler.drawTextShadow);
 			}
 		}
-		
-		matrixStack.popMatrix();
 	}
 
 	private static void drawText(Font font, GuiGraphicsExtractor guiGraphics, String content, int x, int y, int rgb, boolean drawShadow) {
@@ -186,15 +183,11 @@ public class GUIEvent {
 	}
 	
 	private static String getGameTime() {
-		int time;
-		int gameTime = (int)mc.level.getOverworldClockTime();
-		int daysPlayed = 0;
-		
-		while (gameTime >= 24000) {
-			gameTime-=24000;
-			daysPlayed += 1;
-		}
-		
+		long time;
+		long totalTime = mc.level.getOverworldClockTime();
+		long gameTime = totalTime % 24000;
+		long daysPlayed = totalTime / 24000;
+
 		if (ConfigHandler.showDaysPlayedWorld) {
 			daystring = "Day " + daysPlayed;
 		}
@@ -233,6 +226,8 @@ public class GUIEvent {
 		String[] strSplit = stringTime.toString().split("");
 		
 		int minutes = (int)Math.floor(Double.parseDouble(strSplit[2] + strSplit[3])/100*60);
+		minutes -= minutes % ConfigHandler.minuteStep;
+
 		String sm = minutes + "";
 		if (minutes < 10) {
 			sm = "0" + minutes;

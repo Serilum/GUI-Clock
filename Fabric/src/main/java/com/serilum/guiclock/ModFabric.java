@@ -1,8 +1,8 @@
-package com.natamus.guiclock;
+package com.serilum.guiclock;
 
 import com.natamus.collective.check.RegisterMod;
 import com.natamus.collective.check.ShouldLoadCheck;
-import com.natamus.guiclock.util.Reference;
+import com.serilum.guiclock.util.Reference;
 import net.fabricmc.api.ModInitializer;
 
 public class ModFabric implements ModInitializer {
