@@ -6,7 +6,7 @@ logoFile="icon.png"
 
 [[mods]]
 modId="guiclock"
-version="5.0"
+version="5.1"
 displayName="GUI Clock"
 displayURL="https://serilum.com/mod/gui-clock"
 authors="Serilum"
@@ -14,7 +14,7 @@ description='''Shows the time and days played in the GUI on the screen with a cl
 '''
 credits='''Thank you very much to my Membership sponsors for supporting the development of this mod:  
 
-AnyankaT, aternosorg, Cherriesaurus, Linda Jansen, MWS, Tyler Behl   
+aternosorg, Cherriesaurus, Linda Jansen, MWS, Tyler Behl   
 
 If you would like to contribute too, check out https://serilum.com/donate Appreciate it! <3   
 '''
@@ -23,7 +23,7 @@ If you would like to contribute too, check out https://serilum.com/donate Apprec
     modId="collective"
     type="required"
     mandatory=true
-    versionRange="[8.61,)"
+    versionRange="[8.85,)"
     ordering="NONE"
     side="BOTH"
 
