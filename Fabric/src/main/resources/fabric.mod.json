@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "guiclock",
-  "version": "5.0",
+  "version": "5.1",
 
   "name": "GUI Clock",
   "description": "Shows the time and days played in the GUI on the screen with a clock in the inventory.",
@@ -15,7 +15,7 @@
   "license": "All Rights Reserved",
   "icon": "icon.png",
 
-  "environment": "*",
+  "environment": "client",
   "entrypoints": { "main": [ "com.serilum.guiclock.ModFabric" ], "client": [ "com.serilum.guiclock.ModFabricClient" ], "modmenu": [ "com.serilum.guiclock.fabric.config.IntegrateModMenu" ] },
 
   "depends": {
@@ -23,7 +23,7 @@
     "fabric-api": "*",
     "minecraft": ">=26.3",
     "java": ">=25",
-    "collective": ">=8.61"
+    "collective": ">=8.85"
   },
 
   "custom": {
@@ -41,7 +41,6 @@
 	  "If you would like to contribute too, check out https://serilum.com/donate",
 	  " ",
 	  "Membership sponsors:",
-	  " AnyankaT",
 	  " aternosorg",
 	  " Cherriesaurus",
 	  " Linda Jansen",
