@@ -3,25 +3,22 @@ package com.serilum.guiclock.events;
 import com.mojang.blaze3d.platform.Window;
 import com.natamus.collective.functions.ColourFunctions;
 import com.natamus.collective.functions.GUIFunctions;
+import com.natamus.collective.functions.PlayerFunctions;
 import com.natamus.collective.functions.StringFunctions;
 import com.serilum.guiclock.config.ConfigHandler;
+import com.serilum.guiclock.util.Util;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import java.awt.*;
-import java.util.Collection;
 
 public class GUIEvent {
 	private static final Minecraft mc = Minecraft.getInstance();
-	private static String daystring = "";
 	
 	public static void renderOverlay(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
 		if (GUIFunctions.shouldHideGUI()) {
@@ -33,16 +30,7 @@ public class GUIEvent {
 		boolean found = true;
 		
 		if (gametimeb || realtimeb) {
-			found = mc.player.getOffhandItem().getItem().equals(Items.CLOCK);
-			if (!found) {
-				Inventory inv = mc.player.getInventory();
-				for (int n = 0; n <= 35; n++) {
-					if (inv.getItem(n).getItem().equals(Items.CLOCK)) {
-						found = true;
-						break;
-					}
-				}
-			}
+			found = PlayerFunctions.hasItemInInventory(mc.player, Items.CLOCK);
 		}
 
 		Font fontRenderer = mc.font;
@@ -55,31 +43,9 @@ public class GUIEvent {
 		}
 		
 		if (ConfigHandler.lowerClockWhenPlayerHasEffects) {
-			Collection<MobEffectInstance> activeeffects = mc.player.getActiveEffects();
-			if (!activeeffects.isEmpty()) {
-				boolean haspositive = false;
-				boolean hasnegative = false;
-				for (MobEffectInstance effect : activeeffects) {
-					if (effect.isVisible()) {
-						if (effect.getEffect().value().getCategory().equals(MobEffectCategory.BENEFICIAL)) {
-							haspositive = true;
-						}
-						else {
-							hasnegative = true;
-						}
-
-						if (haspositive && hasnegative) {
-							break;
-						}
-					}
-				}
-
-				if (hasnegative && haspositive) {
-					heightoffset += 50;
-				}
-				else if (haspositive && !hasnegative) {
-					heightoffset += 25;
-				}
+			int effectIconRowsHeight = Util.getEffectIconRowsHeight(mc.player);
+			if (heightoffset < effectIconRowsHeight) {
+				heightoffset += effectIconRowsHeight;
 			}
 		}
 		
@@ -107,8 +73,6 @@ public class GUIEvent {
 			guiGraphics.item(new ItemStack(Items.CLOCK), xcoord, heightoffset);
 		}
 		else {
-			daystring = "";
-
 			String time;
 			String realtime = StringFunctions.getPCLocalTime(ConfigHandler._24hourformat, ConfigHandler.showRealTimeSeconds);
 			if (ConfigHandler.showBothTimes) {
@@ -148,9 +112,15 @@ public class GUIEvent {
 			if (time.isEmpty()) {
 				return;
 			}
-			
+
+			boolean mayShowGameTime = found || !gametimeb;
+			String dayString = "";
+			if (ConfigHandler.showDaysPlayedWorld && mayShowGameTime) {
+				dayString = Util.getDayString(mc.level);
+			}
+
 			int stringWidth = fontRenderer.width(time);
-			int daystringWidth = fontRenderer.width(daystring);
+			int dayStringWidth = fontRenderer.width(dayString);
 			
 			Color colour = new Color(ColourFunctions.getRgbColour(ConfigHandler.RGB));
 			
@@ -160,11 +130,11 @@ public class GUIEvent {
 			}
 			else if (ConfigHandler.clockPosition.equals("Center")) {
 				xcoord = (width/2) - (stringWidth/2);
-				daycoord = (width/2) - (daystringWidth/2);
+				daycoord = (width/2) - (dayStringWidth/2);
 			}
 			else {
 				xcoord = width - stringWidth - 5;
-				daycoord = width - daystringWidth - 5;
+				daycoord = width - dayStringWidth - 5;
 			}
 			
 			xcoord += ConfigHandler.clockWidthOffset;
@@ -172,8 +142,8 @@ public class GUIEvent {
 
 			int rgb = colour.getRGB();
 			drawText(fontRenderer, guiGraphics, time, xcoord, heightoffset, rgb, ConfigHandler.drawTextShadow);
-			if (!daystring.isEmpty()) {
-				drawText(fontRenderer, guiGraphics, daystring, daycoord, heightoffset+10, rgb, ConfigHandler.drawTextShadow);
+			if (!dayString.isEmpty()) {
+				drawText(fontRenderer, guiGraphics, dayString, daycoord, heightoffset+10, rgb, ConfigHandler.drawTextShadow);
 			}
 		}
 	}
@@ -184,13 +154,7 @@ public class GUIEvent {
 	
 	private static String getGameTime() {
 		long time;
-		long totalTime = mc.level.getOverworldClockTime();
-		long gameTime = totalTime % 24000;
-		long daysPlayed = totalTime / 24000;
-
-		if (ConfigHandler.showDaysPlayedWorld) {
-			daystring = "Day " + daysPlayed;
-		}
+		long gameTime = mc.level.getOverworldClockTime() % 24000;
 
 		if (gameTime >= 18000) {
 			time = gameTime-18000;
